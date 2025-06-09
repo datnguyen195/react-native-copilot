@@ -73,7 +73,7 @@ export const CopilotModal = forwardRef<CopilotModalHandle, Props>(
     },
     ref,
   ) {
-    const { stop, currentStep, visible } = useCopilot();
+    const { stop, currentStep, visible, goToNext , isLastStep, copilotEvents , isFirstStep } = useCopilot();
     const [tooltipStyles, setTooltipStyles] = useState({});
     const [arrowStyles, setArrowStyles] = useState({});
     const [animatedValues] = useState({
