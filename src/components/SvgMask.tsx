@@ -3,6 +3,7 @@ import {
   Animated,
   Dimensions,
   Easing,
+  Pressable,
   View,
   type LayoutChangeEvent,
 } from "react-native";
@@ -137,18 +138,30 @@ export const SvgMask = ({
       onStartShouldSetResponder={onClick}
     >
       {canvasSize ? (
-        <Svg pointerEvents="none" width={canvasSize.x} height={canvasSize.y}>
-          <AnimatedSvgPath
-            ref={maskRef}
-            fill={backdropColor}
-            fillRule="evenodd"
-            strokeWidth={1}
-            d={svgMaskPath({
-              size: sizeValue,
-              position: positionValue,
-              canvasSize,
-              step: currentStep,
-            })}
+        <>
+          <Svg width={canvasSize.x} height={canvasSize.y}>
+            <AnimatedSvgPath
+              ref={maskRef}
+              fill={backdropColor}
+              fillRule="evenodd"
+              strokeWidth={0}
+              d={svgMaskPath({
+                size: sizeValue,
+                position: positionValue,
+                canvasSize,
+                step: currentStep,
+              })}
+            />
+          </Svg>
+          <Pressable
+            style={{
+              position: "absolute",
+              left: position.x,
+              top: position.y,
+              width: size.x,
+              height: size.y,
+              zIndex: 10,
+            }}
             onPress={() => {
               onClick?.();
               setTimeout(() => {
@@ -156,7 +169,7 @@ export const SvgMask = ({
               }, 300);
             }}
           />
-        </Svg>
+        </>
       ) : null}
     </View>
   );
