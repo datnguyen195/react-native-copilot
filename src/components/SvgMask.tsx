@@ -10,6 +10,7 @@ import {
 import Svg, { Path } from "react-native-svg";
 
 import type { MaskProps, SvgMaskPathFunction, ValueXY } from "../types";
+import { on } from "events";
 
 const AnimatedSvgPath = Animated.createAnimatedComponent(Path);
 const windowDimensions = Dimensions.get("window");
@@ -138,7 +139,15 @@ export const SvgMask = ({
       onStartShouldSetResponder={onClick}
     >
       {canvasSize ? (
-        <Pressable onPress={onClickSvgMask} style={{ zIndex: 1 }}>
+        <Pressable
+          onPress={() => {
+            onClick?.();
+            setTimeout(() => {
+              onClickSvgMask?.();
+            }, 400);
+          }}
+          style={{ zIndex: 1, backgroundColor: "red" }}
+        >
           <Svg pointerEvents="none" width={canvasSize.x} height={canvasSize.y}>
             <AnimatedSvgPath
               ref={maskRef}
