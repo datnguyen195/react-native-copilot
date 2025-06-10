@@ -3,6 +3,7 @@ import {
   Animated,
   Dimensions,
   Easing,
+  Pressable,
   View,
   type LayoutChangeEvent,
 } from "react-native";
@@ -46,16 +47,17 @@ export const SvgMask = ({
   svgMaskPath = defaultSvgPath,
   onClick,
   currentStep,
+  onClickSvgMask,
 }: MaskProps) => {
   const [canvasSize, setCanvasSize] = useState<ValueXY>({
     x: windowDimensions.width,
     y: windowDimensions.height,
   });
   const sizeValue = useRef<Animated.ValueXY>(
-    new Animated.ValueXY(size)
+    new Animated.ValueXY(size),
   ).current;
   const positionValue = useRef<Animated.ValueXY>(
-    new Animated.ValueXY(position)
+    new Animated.ValueXY(position),
   ).current;
   const maskRef = useRef<any>(null);
 
@@ -102,7 +104,7 @@ export const SvgMask = ({
       position,
       size,
       sizeValue,
-    ]
+    ],
   );
 
   useEffect(() => {
@@ -136,20 +138,22 @@ export const SvgMask = ({
       onStartShouldSetResponder={onClick}
     >
       {canvasSize ? (
-        <Svg pointerEvents="none" width={canvasSize.x} height={canvasSize.y}>
-          <AnimatedSvgPath
-            ref={maskRef}
-            fill={backdropColor}
-            fillRule="evenodd"
-            strokeWidth={1}
-            d={svgMaskPath({
-              size: sizeValue,
-              position: positionValue,
-              canvasSize,
-              step: currentStep,
-            })}
-          />
-        </Svg>
+        <Pressable onPress={onClickSvgMask} style={{ zIndex: 1 }}>
+          <Svg pointerEvents="none" width={canvasSize.x} height={canvasSize.y}>
+            <AnimatedSvgPath
+              ref={maskRef}
+              fill={backdropColor}
+              fillRule="evenodd"
+              strokeWidth={1}
+              d={svgMaskPath({
+                size: sizeValue,
+                position: positionValue,
+                canvasSize,
+                step: currentStep,
+              })}
+            />
+          </Svg>
+        </Pressable>
       ) : null}
     </View>
   );

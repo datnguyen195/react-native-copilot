@@ -70,10 +70,12 @@ export const CopilotModal = forwardRef<CopilotModalHandle, Props>(
       arrowColor = "#fff",
       arrowSize = ARROW_SIZE,
       margin = MARGIN,
+
+      onClickSvgMask,
     },
     ref,
   ) {
-    const { stop, currentStep, visible, goToNext , isLastStep, copilotEvents , isFirstStep } = useCopilot();
+    const { stop, currentStep, visible } = useCopilot();
     const [tooltipStyles, setTooltipStyles] = useState({});
     const [arrowStyles, setArrowStyles] = useState({});
     const [animatedValues] = useState({
@@ -332,6 +334,8 @@ export const CopilotModal = forwardRef<CopilotModalHandle, Props>(
           svgMaskPath={svgMaskPath}
           onClick={handleMaskClick}
           currentStep={currentStep}
+          // Additional custom options can be added here
+          onClickSvgMask={onClickSvgMask}
         />
       );
     }
