@@ -164,9 +164,7 @@ export const SvgMask = ({
             }}
             onPress={() => {
               onClick?.();
-              setTimeout(() => {
-                onClickSvgMask?.();
-              }, 200);
+              onClickSvgMask?.();
             }}
           />
         </>
