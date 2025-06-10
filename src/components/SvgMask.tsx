@@ -139,7 +139,7 @@ export const SvgMask = ({
     >
       {canvasSize ? (
         <>
-          <Svg width={canvasSize.x} height={canvasSize.y}>
+          <Svg pointerEvents="none" width={canvasSize.x} height={canvasSize.y}>
             <AnimatedSvgPath
               ref={maskRef}
               fill={backdropColor}
